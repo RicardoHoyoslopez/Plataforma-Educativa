@@ -1,0 +1,115 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    background: #f6f5f7; /* Color de fondo */
+    position: relative; /* Posicionamiento relativo */
+    background-size: cover; /* Cubrir toda la pantalla con el fondo */
+    background-position: center; /* Centrar el fondo */
+    background-repeat: no-repeat; /* Evitar que el fondo se repita */
+    min-height: 100vh; /* Altura del cuerpo igual al 100% del viewport */
+    margin: 0; /* Eliminar márgenes por defecto */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    font-family: 'Lato', sans-serif, 'Open Sans', sans-serif, 'PT Sans', sans-serif; /* Fuentes */
+    box-sizing: border-box; /* Incluir padding y border en el tamaño total */
+}
+
+/* Contenedor principal que envuelve el formulario y el mensaje de bienvenida */
+.container {
+    width: 100%; /* Ancho completo */
+    max-width: 900px; /* Ancho máximo del contenedor */
+    background-color: white; /* Fondo blanco */
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para el contenedor del formulario */
+.form-container {
+    padding: 2rem; /* Espaciado interno */
+    background-color: white; /* Fondo blanco */
+    border-radius: 20px 0 0 20px; /* Bordes redondeados solo en la izquierda */
+    color: rgb(0, 0, 0); /* Color del texto */
+}
+
+/* Estilos para el contenedor del mensaje de bienvenida */
+.welcome-container {
+    padding: 2rem; /* Espaciado interno */
+    background-color: #021bff; /* Fondo azul */
+    border-radius: 0 20px 20px 0; /* Bordes redondeados solo en la derecha */
+    color: white; /* Color del texto */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    flex-direction: column; /* Alinear elementos verticalmente */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    text-align: center; /* Alinear texto al centro */
+}
+
+/* Estilos para el título en el contenedor de bienvenida */
+.welcome-container h1 {
+    font-size: 2.5rem; /* Tamaño de fuente */
+    margin-bottom: 1rem; /* Margen inferior */
+}
+
+/* Estilos para el párrafo en el contenedor de bienvenida */
+.welcome-container p {
+    font-size: 1.2rem; /* Tamaño de fuente */
+    margin-bottom: 2rem; /* Margen inferior */
+}
+
+/* Estilos para los grupos de entrada (input-group) */
+.input-group {
+    margin-bottom: 1rem; /* Espacio entre los campos */
+}
+
+/* Estilos para el texto dentro de los grupos de entrada (íconos) */
+.input-group-text {
+    background-color: white; /* Fondo blanco */
+    border: none; /* Sin borde */
+}
+
+/* Estilos para los campos de entrada y el menú desplegable */
+.form-control {
+    border: 2px solid rgb(131, 131, 131); /* Borde negro */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilos para el botón personalizado */
+.btn-custom {
+    background-color: #021bff; /* Fondo blanco */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para el botón personalizado */
+.btn-custom:hover {
+    background-color: #021bff; /* Fondo rojo */
+    color: white; /* Color del texto */
+}
+
+/* Estilos para el texto personalizado (enlaces) */
+.text-custom {
+    color: white; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+}
+
+/* Efecto hover para el texto personalizado */
+.text-custom:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Estilos para el boton de iniciar sesion */
+.button-inicio{
+    display: inline-block; /* Mostrar como bloque en línea */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    background-color: white; /* Fondo blanco */
+    color:rgb(0, 0, 0); /* Color del texto rosa */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}

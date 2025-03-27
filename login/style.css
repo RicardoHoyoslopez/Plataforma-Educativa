@@ -1,0 +1,138 @@
+body {
+    background: #f6f5f7; /* Color de fondo */
+    position: relative; /* Posicionamiento relativo */
+    background-size: cover; /* Cubrir toda la pantalla con el fondo */
+    background-position: center; /* Centrar el fondo */
+    background-repeat: no-repeat; /* Evitar que el fondo se repita */
+    height: 100vh; /* Altura del cuerpo igual al 100% del viewport */
+    margin: 0; /* Eliminar márgenes por defecto */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    font-family: 'Lato', sans-serif, 'Open Sans', sans-serif, 'PT Sans', sans-serif; /* Fuentes */
+    box-sizing: border-box; /* Incluir padding y border en el tamaño total */
+}
+
+/* Contenedor principal que envuelve el formulario y el mensaje */
+.container {
+    display: flex; /* Usar flexbox para dividir en dos columnas */
+    width: 900px; /* Ancho del contenedor */
+    background-color: white; /* Fondo blanco */
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para el contenedor del formulario */
+.form-container {
+    width: 50%; /* Ocupa la mitad del contenedor */
+    padding: 2rem; /* Espaciado interno */
+    background-color: rgb(255, 255, 255); /* Fondo azul */
+    border-radius: 20px 0 0 20px; /* Bordes redondeados solo en la izquierda */
+    color: rgb(2, 2, 2); /* Color del texto */
+}
+
+/* Estilos para el contenedor del mensaje de bienvenida */
+.welcome-container {
+    width: 50%; /* Ocupa la mitad del contenedor */
+    padding: 2rem; /* Espaciado interno */
+    background-color: #021bff; /* Fondo azul */
+    border-radius: 0 20px 20px 0; /*Bordes redondeados solo en la derecha
+    color: white; /* Color del texto */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    flex-direction: column; /* Alinear elementos verticalmente */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    text-align: center; /* Alinear texto al centro */
+    color: white;
+
+}
+
+/* Estilos para el título en el contenedor de bienvenida ---------------------------------------------------------*/
+.welcome-container h1 {
+    font-size: 2.3rem; /* Tamaño de fuente */
+    margin-bottom: 1rem; /* Margen inferior */
+}
+
+/* Estilos para el párrafo en el contenedor de bienvenida ------------------------------------------------------*/
+.welcome-container p {
+    font-size: 1.2rem; /* Tamaño de fuente */
+    margin-bottom: 2rem; /* Margen inferior */
+}
+
+/* Estilos para el formulario */
+form {
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilos para el título del formulario */
+h1 {
+    font-size: 2.1rem;
+    display: block; /* Mostrar como bloque */
+    width: 95%; /* Ancho del 95% del contenedor */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px; /* Margen externo */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Estilos para las etiquetas del formulario */
+label {
+    color: black; /* Color del texto */
+    font-size: 15px; /* Tamaño de fuente */
+    padding: 1px; /* Espaciado interno */
+    font-weight: 350; /* Grosor de la fuente */
+}
+
+/* Estilos para los campos de entrada del formulario */
+input {
+    display: block; /* Mostrar como bloque */
+    border: 2px solid rgb(131, 131, 131); /* Borde negro */
+    color: rgb(131, 131, 131);
+    width: 95%; /* Ancho del 95% del contenedor */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px; /* Margen externo */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilos para el botón "Iniciar Sesión" */
+.centered-button {
+    display: block; /* Mostrar como bloque */
+    width: 50%; /* Ancho del 50% del contenedor */
+    margin: 20px auto; /* Centrar horizontalmente con margen */
+    background-color: rgb(56, 5, 241); /* Fondo blanco */
+    padding: 0.5rem; /* Espaciado interno */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: transform 80ms ease-in; /* Transición suave al hacer hover */
+}
+
+/* Efecto hover para el botón "Iniciar Sesión" */
+.centered-button:hover {
+    background-color: rgb(56, 5, 241); /* Fondo rojo */
+    color: white; /* Color del texto blanco */
+}
+
+/* Estilos para el botón "Registrarse" */
+.register-button {
+    display: inline-block; /* Mostrar como bloque en línea */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    background-color: white; /* Fondo blanco */
+    color:rgb(0, 0, 0); /* Color del texto rosa */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Sin subrayado */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+/* Estilos para los mensajes de error */
+.error {
+    background-color: rgb(175, 74, 74); /* Fondo rojo oscuro */
+    color: black; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    width: 95%; /* Ancho del 95% del contenedor */
+    border-radius: 5px; /* Bordes redondeados */
+    margin: 20px auto; /* Centrar horizontalmente con margen */
+}
+
