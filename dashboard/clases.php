@@ -14,6 +14,8 @@ if (!$result) {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -27,7 +29,7 @@ if (!$result) {
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Este es el navdar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
             <a href="#" class="navbar-brand">
