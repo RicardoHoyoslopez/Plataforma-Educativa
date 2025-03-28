@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+
+//aqui llamo la conexion con la base de datos
 require '../includes/Conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
