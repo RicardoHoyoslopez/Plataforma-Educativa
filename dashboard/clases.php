@@ -29,7 +29,7 @@ if (!$result) {
 </head>
 
 <body>
-    <!-- Este es el navdar -->
+    <!-- Este es el naddddddvarr -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
             <a href="#" class="navbar-brand">
