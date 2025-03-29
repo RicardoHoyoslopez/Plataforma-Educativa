@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             JOIN roles r ON u.rol_id = r.id
             WHERE u.Usuario = ?";
     
+    
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "s", $Usuario);
     mysqli_stmt_execute($stmt);
