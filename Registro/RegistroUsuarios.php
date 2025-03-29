@@ -1,6 +1,6 @@
 <?php
 require '../includes/Conexion.php';
-
+// Consultar en la base de datos los roles y los guarda en una variable
 $query_roles = "SELECT * FROM roles";
 $result_roles = mysqli_query($conexion, $query_roles);
 ?>
@@ -11,6 +11,8 @@ $result_roles = mysqli_query($conexion, $query_roles);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Llamamos los  estilos-->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <title>Registro de Usuario</title>
