@@ -16,7 +16,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-    
+
     <link rel="stylesheet" href="stylee.css">
 </head>
 
@@ -42,7 +42,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                         <a href="clases.php" class="nav-link text-light">Practicas</a>
                     </li>
                     <li class="nav-item">
-                        <a href="PaginaProfesor.php" class="nav-link text-light">Profesores</a>
+                        <a href="../docente/profesores.php" class="nav-link text-light">Profesores</a>
                     </li>
                     <li class="nav-item">
                         <?php if ($usuario_autenticado): ?>
@@ -224,7 +224,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
         <div class="container">
             <p>&copy; 2025 Plataforma Educativa. Todos los derechos reservados.</p>
             <p>
-                <a href="#" class="text-white">Política de Privacidad</a> | 
+                <a href="#" class="text-white">Política de Privacidad</a> |
                 <a href="#" class="text-white">Términos y Condiciones</a>
             </p>
             <div class="social-links">

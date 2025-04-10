@@ -1,29 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Crear Clase</title>
 </head>
+
 <body>
 
-<form action="crear_clase.php" method="POST">
-  <input type="text" name="titulo" placeholder="Título de la clase" required>
-  
-  <textarea name="descripcion" placeholder="Descripción" required></textarea>
+  <form method="POST" action="crear_clase.php">
+    <input type="text" name="titulo" placeholder="Título" required><br>
+    <textarea name="descripcion" placeholder="Descripción" required></textarea><br>
+    <input type="datetime-local" name="fecha_creacion" required><br>
 
-  <!-- Campo de horario con tipo datetime-local -->
-  <label for="horario">Horario de la clase:</label>
-  <input type="datetime-local" name="fecha_creacion" required>
+    <select name="dia" required>
+      <option value="">Seleccione el día</option>
+      <option value="Lunes">Lunes</option>
+      <option value="Martes">Martes</option>
+      <option value="Miércoles">Miércoles</option>
+      <option value="Jueves">Jueves</option>
+      <option value="Viernes">Viernes</option>
+      <option value="Sábado">Sábado</option>
+      <option value="Domingo">Domingo</option>
+    </select><br>
 
-  <select name="estado" required>
-    <option value="activa">Activa</option>
-    <option value="finalizada">Finalizada</option>
-  </select>
+    <label>Hora de inicio:</label>
+    <input type="time" name="hora_inicio" required><br>
 
-  <button type="submit">Crear clase</button>
-</form>
+    <label>Hora de fin:</label>
+    <input type="time" name="hora_fin" required><br>
 
+    
+
+    <button type="submit">Crear Clase</button>
+  </form>
 
 </body>
+
 </html>

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     break;
 
                 case 3: // Docente
-                    header("Location: ../Paginadocente/perfil_profesor.php");
+                    header("Location: ../Docente/perfil_profesor.php");
                     break;
 
                 default: // Otro rol
