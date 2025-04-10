@@ -20,13 +20,13 @@ $result_roles = mysqli_query($conexion, $query_roles);
 <body>
     <div class="container py-5">
         <div class="row justify-content-center align-items-stretch"> 
-            <!-- Formulario de registro -->
+            <!-- Formulario de registro ------------->
             <div class="col-lg-6 mb-4 d-flex">
                 <div class="card shadow rounded-4 p-4 w-100"> 
                     <h2 class="text-center mb-4">Registrarse</h2>
                     <form action="logicaregistro.php" method="POST" autocomplete="off">
                         <div class="row">
-                            <!-- Columna izquierda -->
+                            <!-- Columna izquierda --------------------------------->
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
@@ -44,7 +44,7 @@ $result_roles = mysqli_query($conexion, $query_roles);
                                 </div>
                             </div>
 
-                            <!-- Columna derecha -->
+                            <!-- Columna derecha ------------------------>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-map-marker-alt"></i></span>
@@ -68,7 +68,7 @@ $result_roles = mysqli_query($conexion, $query_roles);
                             </div>
                         </div>
 
-                        <!-- Campos adicionales para docentes -->
+                        <!-- Campos adicionales para docentes --------------------------->
                         <div id="campos-docente" class="mt-3" style="display: none;">
                             <h5 class="text-center text-secondary">Información adicional para docentes</h5>
 
@@ -113,8 +113,8 @@ $result_roles = mysqli_query($conexion, $query_roles);
             </div>
 
             <!-- Mensaje de bienvenida -->
-            <div class="col-md-6 d-flex"> <!-- Añadido d-flex -->
-                <div class="welcome-container w-100"> <!-- Añadido w-100 -->
+            <div class="col-md-6 d-flex"> 
+                <div class="welcome-container w-100"> 
                     <h1>¡Bienvenido!</h1>
                     <p>inicie sesión con su información personal.</p>
                     <a href="../login/index.php" class="button-inicio">Iniciar Sesión</a>
@@ -123,7 +123,7 @@ $result_roles = mysqli_query($conexion, $query_roles);
         </div>
     </div>
 
-    <!-- Script para mostrar/ocultar campos del docente -->
+    <!-- Script para mostrar/ocultar campos del docente ------------------->
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const selectRol = document.querySelector('select[name="Rol"]');
@@ -132,7 +132,7 @@ $result_roles = mysqli_query($conexion, $query_roles);
         const clave = document.querySelector('input[name="Clave"]');
         const confirmarClave = document.getElementById('confirmarClave');
 
-        // Mostrar u ocultar campos del docente
+        // Mostrar u ocultar campos del docente-------------
         selectRol.addEventListener('change', function () {
             if (this.value === '3') {
                 camposDocente.style.display = 'block';
