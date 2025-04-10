@@ -1,32 +1,51 @@
 <?php
 require '../includes/Conexion.php';
-// Consultar en la base de datos los roles y los guarda en una variable
 $query_roles = "SELECT * FROM roles";
 $result_roles = mysqli_query($conexion, $query_roles);
+
+// Mostrar errores de sesión si existen
+if (isset($_SESSION['error_registro'])) {
+    $error = $_SESSION['error_registro'];
+    unset($_SESSION['error_registro']);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .error-message {
+            color: #dc3545;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f8d7da;
+        }
+    </style>
 </head>
-
 <body>
     <div class="container py-5">
-        <div class="row justify-content-center align-items-stretch"> 
-            <!-- Formulario de registro ------------->
+        <div class="row justify-content-center align-items-stretch">
+            <!-- Formulario de registro -->
             <div class="col-lg-6 mb-4 d-flex">
-                <div class="card shadow rounded-4 p-4 w-100"> 
+                <div class="card shadow rounded-4 p-4 w-100">
                     <h2 class="text-center mb-4">Registrarse</h2>
-                    <form action="logicaregistro.php" method="POST" autocomplete="off">
+                    
+                    <?php if (!empty($error)): ?>
+                        <div class="error-message text-center">
+                            <?php echo htmlspecialchars($error); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="logicaregistro.php" method="POST" autocomplete="off" enctype="multipart/form-data">
                         <div class="row">
-                            <!-- Columna izquierda --------------------------------->
+                            <!-- Columna izquierda -->
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
@@ -44,7 +63,7 @@ $result_roles = mysqli_query($conexion, $query_roles);
                                 </div>
                             </div>
 
-                            <!-- Columna derecha ------------------------>
+                            <!-- Columna derecha -->
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="fa-solid fa-map-marker-alt"></i></span>
@@ -55,9 +74,9 @@ $result_roles = mysqli_query($conexion, $query_roles);
                                     <span class="input-group-text"><i class="fa-solid fa-user-tag"></i></span>
                                     <select name="Rol" class="form-select" required>
                                         <option value="">¿Cómo quieres registrarte?</option>
-                                        <?php while ($row = mysqli_fetch_assoc($result_roles)) { ?>
+                                        <?php while ($row = mysqli_fetch_assoc($result_roles)): ?>
                                             <option value="<?= $row['id'] ?>"><?= $row['nombre'] ?></option>
-                                        <?php } ?>
+                                        <?php endwhile; ?>
                                     </select>
                                 </div>
 
@@ -68,30 +87,27 @@ $result_roles = mysqli_query($conexion, $query_roles);
                             </div>
                         </div>
 
-                        <!-- Campos adicionales para docentes --------------------------->
+                        <!-- Campos adicionales para docentes -->
                         <div id="campos-docente" class="mt-3" style="display: none;">
                             <h5 class="text-center text-secondary">Información adicional para docentes</h5>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
-                                <input type="text" name="Experiencia" class="form-control" placeholder="Experiencia Laboral (ej: Matemáticas)">
+                                <input type="text" name="Experiencia" class="form-control" placeholder="Especialidad (ej: Matemáticas)" required>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                                <input type="text" name="Titulo" class="form-control" placeholder="Título profesional">
+                                <input type="text" name="Titulo" class="form-control" placeholder="Título profesional" required>
                             </div>
-                            
 
                             <div class="input-group mb-3">
-                                 <span class="input-group-text"><i class="fa-solid fa-file-pdf"></i></span>
-                                 <input type="file" name="hoja_vida_path" class="form-control" accept=".pdf,.doc,.docx" required>
+                                <span class="input-group-text"><i class="fa-solid fa-file-pdf"></i></span>
+                                <input type="file" name="hoja_vida_path" class="form-control" accept=".pdf,.doc,.docx" required>
                             </div>
                             <div class="form-text mb-3">
-                                 Sube tu hoja de vida en formato PDF o Word (máximo 5MB)
+                                Sube tu hoja de vida en formato PDF o Word (máximo 5MB)
                             </div>
-
-
                         </div>
 
                         <div class="input-group mb-3">
@@ -104,7 +120,6 @@ $result_roles = mysqli_query($conexion, $query_roles);
                             <input type="password" name="ConfirmarClave" id="confirmarClave" class="form-control" placeholder="Confirmar clave" required>
                         </div>
 
-
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Registrarse</button>
                         </div>
@@ -113,17 +128,17 @@ $result_roles = mysqli_query($conexion, $query_roles);
             </div>
 
             <!-- Mensaje de bienvenida -->
-            <div class="col-md-6 d-flex"> 
-                <div class="welcome-container w-100"> 
+            <div class="col-md-6 d-flex">
+                <div class="welcome-container w-100">
                     <h1>¡Bienvenido!</h1>
-                    <p>inicie sesión con su información personal.</p>
+                    <p>Inicie sesión con su información personal.</p>
                     <a href="../login/index.php" class="button-inicio">Iniciar Sesión</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script para mostrar/ocultar campos del docente ------------------->
+    <!-- Script para mostrar/ocultar campos del docente -->
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const selectRol = document.querySelector('select[name="Rol"]');
@@ -132,31 +147,32 @@ $result_roles = mysqli_query($conexion, $query_roles);
         const clave = document.querySelector('input[name="Clave"]');
         const confirmarClave = document.getElementById('confirmarClave');
 
-        // Mostrar u ocultar campos del docente-------------
+        // Mostrar u ocultar campos del docente
         selectRol.addEventListener('change', function () {
             if (this.value === '3') {
                 camposDocente.style.display = 'block';
+                // Hacer requeridos los campos de docente
                 camposDocente.querySelectorAll('input').forEach(input => {
                     input.required = true;
                 });
             } else {
                 camposDocente.style.display = 'none';
+                // Quitar el requerido de los campos de docente
                 camposDocente.querySelectorAll('input').forEach(input => {
                     input.required = false;
                 });
             }
         });
 
-        // Validar que las contraseñas coincidan antes de enviar el formulario
+        // Validar que las contraseñas coincidan
         form.addEventListener('submit', function (e) {
             if (clave.value !== confirmarClave.value) {
-                e.preventDefault(); // Detener el envío
+                e.preventDefault();
                 alert('Las contraseñas no coinciden');
                 confirmarClave.focus();
             }
         });
     });
     </script>
-
 </body>
 </html>
