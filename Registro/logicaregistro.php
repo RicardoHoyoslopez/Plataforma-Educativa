@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return mysqli_real_escape_string($conexion, $dato);
     }
 
-    // captura los datos y luego valida los datos básicos
+    // captura los datos y luego valida los datos básicos----------------------
     $camposRequeridos = [
         'Nombre_Completo' => $_POST['Nombre_Completo'] ?? '',
         'Usuario' => $_POST['Usuario'] ?? '',
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Asignar datos básicos
+    // Asignar datos básicos------------------
     $Nombre_Completo = limpiarDato($_POST['Nombre_Completo'], $conexion);
     $Usuario = limpiarDato($_POST['Usuario'], $conexion);
     $Email = filter_var(limpiarDato($_POST['Email'], $conexion), FILTER_SANITIZE_EMAIL);
@@ -55,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Rol = (int)$_POST['Rol'];
     $ClaveHash = password_hash($_POST['Clave'], PASSWORD_BCRYPT);
 
-    // Inicializar campos de docente
+    // Inicializar campos de docente---------------------
     $hoja_vida_path = null;
     $Titulo = null;
     $Experiencia = null;
 
-    // Validar campos de docente si el rol es 3
+    // Validar campos de docente si el rol es 3--------------------------
     if ($Rol == 3) {
         // Procesar hoja de vida
         if (isset($_FILES['hoja_vida']) && $_FILES['hoja_vida']['error'] === UPLOAD_ERR_OK) {
@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Verificar en la base de datos si el usuario ya existe
+    // Verificar en la base de datos si el usuario ya existe--------------------
     $sql_check = "SELECT id FROM usuarios WHERE Usuario = ? OR Email = ?";
     $stmt_check = mysqli_prepare($conexion, $sql_check);
     mysqli_stmt_bind_param($stmt_check, "ss", $Usuario, $Email);
@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // TRANSACCIÓN PARA INSERTAR
+    // TRANSACCIÓN PARA INSERTAR-------------------------------------
     mysqli_begin_transaction($conexion);
 
     try {
