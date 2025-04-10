@@ -1,5 +1,6 @@
 <?php
 require '../includes/Conexion.php';
+// Consultar en la base de datos los roles y los guarda en una variable
 $query_roles = "SELECT * FROM roles";
 $result_roles = mysqli_query($conexion, $query_roles);
 ?>
@@ -12,16 +13,16 @@ $result_roles = mysqli_query($conexion, $query_roles);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Tus estilos personalizados -->
+    <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
     <div class="container py-5">
-        <div class="row justify-content-center align-items-stretch"> <!-- Cambiado a stretch -->
+        <div class="row justify-content-center align-items-stretch"> 
             <!-- Formulario de registro -->
             <div class="col-lg-6 mb-4 d-flex">
-                <div class="card shadow rounded-4 p-4 w-100"> <!-- Añadido d-flex y w-100 -->
+                <div class="card shadow rounded-4 p-4 w-100"> 
                     <h2 class="text-center mb-4">Registrarse</h2>
                     <form action="logicaregistro.php" method="POST" autocomplete="off">
                         <div class="row">
