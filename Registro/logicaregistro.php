@@ -17,12 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     echo '</div>';
-
+    // exit(); // Descomenta esta línea si solo quieres ver los datos sin procesar
 }
 // ===== [FIN DE DEPURACIÓN] ===== //
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Función para la validación----------------------
+    // Función para la validación
     function limpiarDato($dato, $conexion) {
         $dato = trim($dato);
         $dato = stripslashes($dato);
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return mysqli_real_escape_string($conexion, $dato);
     }
 
-    // captura los datos y luego valida los datos básicos-----------------------
+    // captura los datos y luego valida los datos básicos
     $camposRequeridos = [
         'Nombre_Completo' => $_POST['Nombre_Completo'] ?? '',
         'Usuario' => $_POST['Usuario'] ?? '',
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Asignar datos básicos-------------------
+    // Asignar datos básicos
     $Nombre_Completo = limpiarDato($_POST['Nombre_Completo'], $conexion);
     $Usuario = limpiarDato($_POST['Usuario'], $conexion);
     $Email = filter_var(limpiarDato($_POST['Email'], $conexion), FILTER_SANITIZE_EMAIL);
@@ -55,18 +55,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Rol = (int)$_POST['Rol'];
     $ClaveHash = password_hash($_POST['Clave'], PASSWORD_BCRYPT);
 
-    // Inicializar campos de docente--------------------------
+    // Inicializar campos de docente
     $hoja_vida_path = null;
     $Titulo = null;
     $Experiencia = null;
 
-    // Validar campos de docente si el rol es 3------------------------
+    // Validar campos de docente si el rol es 3
     if ($Rol == 3) {
         // Procesar hoja de vida
         if (isset($_FILES['hoja_vida']) && $_FILES['hoja_vida']['error'] === UPLOAD_ERR_OK) {
             $directorio = "../uploads/hojas_vida/";
             
-            // Crear directorio si no existe------------------
+            // Crear directorio si no existe
             if (!file_exists($directorio)) {
                 mkdir($directorio, 0777, true);
             }
