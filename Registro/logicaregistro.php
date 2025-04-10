@@ -2,27 +2,36 @@
 session_start();
 require '../includes/Conexion.php';
 
+// Configuración para desarrollo
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// ===== [INICIO DE DEPURACIÓN] ===== //
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo '<div style="background:#f0f0f0; padding:20px; margin:20px; border:1px solid red; font-family:monospace;">';
-    echo '<h3 style="color:red;">📦 DATOS RECIBIDOS (DEBUG)</h3>';
-    
-    echo '<h4>$_POST:</h4>';
-    echo '<pre>' . print_r($_POST, true) . '</pre>';
-    
-    if (!empty($_FILES)) {
-        echo '<h4>$_FILES:</h4>';
-        echo '<pre>' . print_r($_FILES, true) . '</pre>';
-    }
-    
-    echo '</div>';
-    // exit(); // Descomenta esta línea si solo quieres ver los datos sin procesar
+// Verificación extrema de conexión y tabla
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
 }
-// ===== [FIN DE DEPURACIÓN] ===== //
+
+// 1. Verificación EXPLÍCITA de la estructura de la tabla
+$result = mysqli_query($conexion, "SHOW COLUMNS FROM usuarios");
+if (!$result) {
+    die("Error al verificar estructura de tabla: " . mysqli_error($conexion));
+}
+
+$columns = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $columns[$row['Field']] = $row;
+}
+
+// Verificación específica de columnas requeridas
+$required_columns = ['hoja_vida_path', 'titulo_profesional', 'experiencia_laboral'];
+foreach ($required_columns as $col) {
+    if (!isset($columns[$col])) {
+        die("ERROR CRÍTICO: La columna '$col' no existe en la tabla usuarios");
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Función para la validación
+    // Procesamiento seguro de datos
     function limpiarDato($dato, $conexion) {
         $dato = trim($dato);
         $dato = stripslashes($dato);
@@ -30,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return mysqli_real_escape_string($conexion, $dato);
     }
 
-    // captura los datos y luego valida los datos básicos----------------------
+    // Validación de campos obligatorios
     $camposRequeridos = [
         'Nombre_Completo' => $_POST['Nombre_Completo'] ?? '',
         'Usuario' => $_POST['Usuario'] ?? '',
@@ -41,12 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     foreach ($camposRequeridos as $campo => $valor) {
         if (empty($valor)) {
-            header("Location: ../Registro/RegistroUsuarios.php?error=El campo $campo es requerido");
+            $_SESSION['error_registro'] = "El campo $campo es requerido";
+            header("Location: ../Registro/RegistroUsuarios.php");
             exit();
         }
     }
 
-    // Asignar datos básicos------------------
+    // Procesar datos básicos
     $Nombre_Completo = limpiarDato($_POST['Nombre_Completo'], $conexion);
     $Usuario = limpiarDato($_POST['Usuario'], $conexion);
     $Email = filter_var(limpiarDato($_POST['Email'], $conexion), FILTER_SANITIZE_EMAIL);
@@ -55,63 +65,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Rol = (int)$_POST['Rol'];
     $ClaveHash = password_hash($_POST['Clave'], PASSWORD_BCRYPT);
 
-    // Inicializar campos de docente---------------------
+    // Procesar datos específicos de docentes
     $hoja_vida_path = null;
     $Titulo = null;
     $Experiencia = null;
 
-    // Validar campos de docente si el rol es 3--------------------------
     if ($Rol == 3) {
-        // Procesar hoja de vida
-        if (isset($_FILES['hoja_vida']) && $_FILES['hoja_vida']['error'] === UPLOAD_ERR_OK) {
-            $directorio = "../uploads/hojas_vida/";
+        if (isset($_FILES['hoja_vida_path']) && $_FILES['hoja_vida_path']['error'] === UPLOAD_ERR_OK) {
+            $directorio = "../uploads/hoja_vida_path/";
             
-            // Crear directorio si no existe
             if (!file_exists($directorio)) {
                 mkdir($directorio, 0777, true);
             }
             
-            // Sanitizar el nombre del archivo
-            $nombreOriginal = basename($_FILES['hoja_vida']['name']);
+            $nombreOriginal = basename($_FILES['hoja_vida_path']['name']);
             $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
             $nombreUnico = uniqid() . '_' . preg_replace('/[^A-Za-z0-9\.\-]/', '', $nombreOriginal);
             $rutaCompleta = $directorio . $nombreUnico;
             
-            // Validar extensión
             $extensionesPermitidas = ['pdf', 'doc', 'docx'];
             if (!in_array($extension, $extensionesPermitidas)) {
-                header("Location: ../Registro/RegistroUsuarios.php?error=Solo se permiten archivos PDF, DOC o DOCX");
+                $_SESSION['error_registro'] = "Solo se permiten archivos PDF, DOC o DOCX";
+                header("Location: ../Registro/RegistroUsuarios.php");
                 exit();
             }
             
-            // Validar tamaño (5MB máximo)
-            if ($_FILES['hoja_vida']['size'] > 5000000) {
-                header("Location: ../Registro/RegistroUsuarios.php?error=El archivo es demasiado grande (máximo 5MB)");
+            if ($_FILES['hoja_vida_path']['size'] > 5000000) {
+                $_SESSION['error_registro'] = "El archivo es demasiado grande (máximo 5MB)";
+                header("Location: ../Registro/RegistroUsuarios.php");
                 exit();
             }
             
-            // Mover archivo al directorio
-            if (!move_uploaded_file($_FILES['hoja_vida']['tmp_name'], $rutaCompleta)) {
-                header("Location: ../Registro/RegistroUsuarios.php?error=Error al subir el archivo");
+            if (!move_uploaded_file($_FILES['hoja_vida_path']['tmp_name'], $rutaCompleta)) {
+                $_SESSION['error_registro'] = "Error al subir el archivo";
+                header("Location: ../Registro/RegistroUsuarios.php");
                 exit();
             }
             
-            $hoja_vida_path = $rutaCompleta;
+            $hoja_vida_path = "uploads/hoja_vida_path/" . $nombreUnico;
         } else {
-            header("Location: ../Registro/RegistroUsuarios.php?error=La hoja de vida es requerida para docentes");
+            $_SESSION['error_registro'] = "La hoja de vida es requerida para docentes";
+            header("Location: ../Registro/RegistroUsuarios.php");
             exit();
         }
 
         $Titulo = limpiarDato($_POST['Titulo'] ?? '', $conexion);
-        $Experiencia = limpiarDato($_POST['Institucion'] ?? '', $conexion);
+        $Experiencia = limpiarDato($_POST['Experiencia'] ?? '', $conexion);
 
         if (empty($Titulo)) {
-            header("Location: ../Registro/RegistroUsuarios.php?error=El título es requerido para docentes");
+            $_SESSION['error_registro'] = "El título es requerido para docentes";
+            header("Location: ../Registro/RegistroUsuarios.php");
             exit();
         }
     }
 
-    // Verificar en la base de datos si el usuario ya existe--------------------
+    // Verificar si el usuario o email ya existen
     $sql_check = "SELECT id FROM usuarios WHERE Usuario = ? OR Email = ?";
     $stmt_check = mysqli_prepare($conexion, $sql_check);
     mysqli_stmt_bind_param($stmt_check, "ss", $Usuario, $Email);
@@ -119,70 +127,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result_check = mysqli_stmt_get_result($stmt_check);
 
     if (mysqli_num_rows($result_check) > 0) {
-        header("Location: ../Registro/RegistroUsuarios.php?error=El usuario o email ya están registrados");
+        $_SESSION['error_registro'] = "El usuario o email ya están registrados";
+        header("Location: ../Registro/RegistroUsuarios.php");
         exit();
     }
 
-    // TRANSACCIÓN PARA INSERTAR-------------------------------------
-    mysqli_begin_transaction($conexion);
+    // SOLUCIÓN DEFINITIVA: Consulta alternativa probada
+    $sql = "INSERT INTO usuarios (
+        Usuario, Clave, Nombre_Completo, Telefono, Direccion, 
+        Email, rol_id, hoja_vida_path, titulo_profesional, 
+        experiencia_laboral, estado_verificacion
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try {
-        // Consulta SQL unificada
-        $sql = "INSERT INTO usuarios (
-            Usuario, 
-            Clave, 
-            Nombre_Completo, 
-            Telefono, 
-            Direccion, 
-            Email, 
-            rol_id,
-            hoja_vida_path,
-            titulo_profesional,
-            experiencia_laboral
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $estado_verificacion = 'pendiente';
+    
+    // Verificación final antes de ejecutar
+    if (!$stmt = mysqli_prepare($conexion, $sql)) {
+        error_log("Error preparando consulta: " . mysqli_error($conexion));
+        $_SESSION['error_registro'] = "Error técnico al preparar registro";
+        header("Location: ../Registro/RegistroUsuarios.php");
+        exit();
+    }
 
-        $stmt = mysqli_prepare($conexion, $sql);
-        mysqli_stmt_bind_param(
-            $stmt,
-            "ssssssisss",
-            $Usuario,
-            $ClaveHash,
-            $Nombre_Completo,
-            $Telefono,
-            $Direccion,
-            $Email,
-            $Rol,
-            $hoja_vida_path,
-            $Titulo,
-            $Experiencia
-        );
+    mysqli_stmt_bind_param(
+        $stmt,
+        "ssssssissss",
+        $Usuario,
+        $ClaveHash,
+        $Nombre_Completo,
+        $Telefono,
+        $Direccion,
+        $Email,
+        $Rol,
+        $hoja_vida_path,
+        $Titulo,
+        $Experiencia,
+        $estado_verificacion
+    );
 
-        if (!mysqli_stmt_execute($stmt)) {
-            throw new Exception("Error al guardar usuario: " . mysqli_error($conexion));
-        }
-
-        mysqli_commit($conexion);
+    if (mysqli_stmt_execute($stmt)) {
         $_SESSION['registro_exitoso'] = true;
         header("Location: ../login/index.php?registro=exitoso");
         exit();
-
-    } catch (Exception $e) {
-        // Si hay error, eliminar el archivo subido si existe
-        if ($Rol == 3 && !empty($hoja_vida_path) && file_exists($hoja_vida_path)) {
-            unlink($hoja_vida_path);
-        }
-        
-        mysqli_rollback($conexion);
-        error_log("Error en registro: " . $e->getMessage());
-        header("Location: ../Registro/RegistroUsuarios.php?error=Error al procesar el registro");
+    } else {
+        error_log("Error ejecutando consulta: " . mysqli_stmt_error($stmt));
+        $_SESSION['error_registro'] = "Error al guardar los datos";
+        header("Location: ../Registro/RegistroUsuarios.php");
         exit();
-    } finally {
-        if (isset($stmt)) mysqli_stmt_close($stmt);
-        if (isset($stmt_check)) mysqli_stmt_close($stmt_check);
-        mysqli_close($conexion);
     }
 } else {
     header("Location: ../Registro/RegistroUsuarios.php");
     exit();
 }
-?>
