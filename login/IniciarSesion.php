@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+
+//aqui llamo la conexion con la base de datos
 require '../includes/Conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             FROM usuarios u
             JOIN roles r ON u.rol_id = r.id
             WHERE u.Usuario = ?";
+    
     
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "s", $Usuario);
