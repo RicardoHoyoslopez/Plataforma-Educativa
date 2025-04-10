@@ -30,16 +30,27 @@ foreach ($required_columns as $col) {
     }
 }
 
+
+// ===== [INICIO DE DEPURACIÓN] ===== //
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Procesamiento seguro de datos
-    function limpiarDato($dato, $conexion) {
-        $dato = trim($dato);
-        $dato = stripslashes($dato);
-        $dato = htmlspecialchars($dato, ENT_QUOTES, 'UTF-8');
-        return mysqli_real_escape_string($conexion, $dato);
+    // Función de validación mejorada
+    function validate($data, $conexion) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+        return mysqli_real_escape_string($conexion, $data);
     }
 
-    // Validación de campos obligatorios---------------
+    // Validar datos comunes
+    $Nombre_Completo = validate($_POST['Nombre_Completo'], $conexion);
+    $Usuario = validate($_POST['Usuario'], $conexion);
+    $Email = filter_var(validate($_POST['Email'], $conexion), FILTER_SANITIZE_EMAIL);
+    $Direccion = validate($_POST['Direccion'], $conexion);
+    $Telefono = validate($_POST['Telefono'], $conexion);
+    $Clave = $_POST['Clave']; // No aplicar validate para no afectar el hash
+    $Rol = (int)validate($_POST['Rol'], $conexion);
+
+    // Verificar campos obligatorios
     $camposRequeridos = [
         'Nombre_Completo' => $_POST['Nombre_Completo'] ?? '',
         'Usuario' => $_POST['Usuario'] ?? '',
@@ -56,124 +67,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Procesar datos básicos-----------------------
-    $Nombre_Completo = limpiarDato($_POST['Nombre_Completo'], $conexion);
-    $Usuario = limpiarDato($_POST['Usuario'], $conexion);
-    $Email = filter_var(limpiarDato($_POST['Email'], $conexion), FILTER_SANITIZE_EMAIL);
-    $Direccion = limpiarDato($_POST['Direccion'] ?? '', $conexion);
-    $Telefono = limpiarDato($_POST['Telefono'] ?? '', $conexion);
-    $Rol = (int)$_POST['Rol'];
-    $ClaveHash = password_hash($_POST['Clave'], PASSWORD_BCRYPT);
+    // Verificar rol válido
+    $query_rol = "SELECT id FROM roles WHERE id = ?";
+    $stmt_rol = mysqli_prepare($conexion, $query_rol);
+    mysqli_stmt_bind_param($stmt_rol, "i", $Rol);
+    mysqli_stmt_execute($stmt_rol);
+    $result_rol = mysqli_stmt_get_result($stmt_rol);
 
-    // Procesar datos específicos de docentes--------------------------------
-    $hoja_vida_path = null;
-    $Titulo = null;
-    $Experiencia = null;
-
-    if ($Rol == 3) {
-        if (isset($_FILES['hoja_vida_path']) && $_FILES['hoja_vida_path']['error'] === UPLOAD_ERR_OK) {
-            $directorio = "../uploads/hojas_vida/";
-            
-            if (!file_exists($directorio)) {
-                mkdir($directorio, 0777, true);
-            }
-            
-            $nombreOriginal = basename($_FILES['hoja_vida_path']['name']);
-            $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
-            $nombreUnico = uniqid() . '_' . preg_replace('/[^A-Za-z0-9\.\-]/', '', $nombreOriginal);
-            $rutaCompleta = $directorio . $nombreUnico;
-            
-            $extensionesPermitidas = ['pdf', 'doc', 'docx'];
-            if (!in_array($extension, $extensionesPermitidas)) {
-                $_SESSION['error_registro'] = "Solo se permiten archivos PDF, DOC o DOCX";
-                header("Location: ../Registro/RegistroUsuarios.php");
-                exit();
-            }
-            
-            if ($_FILES['hoja_vida_path']['size'] > 5000000) {
-                $_SESSION['error_registro'] = "El archivo es demasiado grande (máximo 5MB)";
-                header("Location: ../Registro/RegistroUsuarios.php");
-                exit();
-            }
-            
-            if (!move_uploaded_file($_FILES['hoja_vida_path']['tmp_name'], $rutaCompleta)) {
-                $_SESSION['error_registro'] = "Error al subir el archivo";
-                header("Location: ../Registro/RegistroUsuarios.php");
-                exit();
-            }
-            
-            $hoja_vida_path = "uploads/hoja_vida_path/" . $nombreUnico;
-        } else {
-            $_SESSION['error_registro'] = "La hoja de vida es requerida para docentes";
-            header("Location: ../Registro/RegistroUsuarios.php");
-            exit();
-        }
-
-        $Titulo = limpiarDato($_POST['Titulo'] ?? '', $conexion);
-        $Experiencia = limpiarDato($_POST['Especialidad'] ?? '', $conexion);
-
-        if (empty($Titulo)) {
-            $_SESSION['error_registro'] = "El título es requerido para docentes";
-            header("Location: ../Registro/RegistroUsuarios.php");
-            exit();
-        }
+    if (mysqli_num_rows($result_rol) == 0) {
+        header("Location: ../Registro/RegistroUsuarios.php?error=Rol no válido");
+        exit();
     }
 
-    // Verificar si el usuario o email ya existen--------------------------
-    $sql_check = "SELECT id FROM usuarios WHERE Usuario = ? OR Email = ?";
+    // Verificar usuario existente (CONSULTA PREPARADA)
+    $sql_check = "SELECT id FROM usuarios WHERE Usuario = ?";
     $stmt_check = mysqli_prepare($conexion, $sql_check);
     mysqli_stmt_bind_param($stmt_check, "ss", $Usuario, $Email);
     mysqli_stmt_execute($stmt_check);
     $result_check = mysqli_stmt_get_result($stmt_check);
 
     if (mysqli_num_rows($result_check) > 0) {
-        $_SESSION['error_registro'] = "El usuario o email ya están registrados";
-        header("Location: ../Registro/RegistroUsuarios.php");
+        header("Location: ../Registro/RegistroUsuarios.php?error=El usuario ya existe");
         exit();
     }
 
-    // SOLUCIÓN DEFINITIVA: Consulta alternativa probada--------------------------------
-    $sql = "INSERT INTO usuarios (
-        Usuario, Clave, Nombre_Completo, Telefono, Direccion, 
-        Email, rol_id, hoja_vida_path, titulo_profesional, 
-        experiencia_laboral, estado_verificacion
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Hash de la contraseña
+    $ClaveHash = password_hash($Clave, PASSWORD_BCRYPT);
 
-    $estado_verificacion = 'pendiente';
-    
-    // Verificación final antes de ejecutar-------------------------------------------------
-    if (!$stmt = mysqli_prepare($conexion, $sql)) {
-        error_log("Error preparando consulta: " . mysqli_error($conexion));
-        $_SESSION['error_registro'] = "Error técnico al preparar registro";
-        header("Location: ../Registro/RegistroUsuarios.php");
-        exit();
-    }
+    // TRANSACCIÓN PARA INSERTAR DATOS
+    mysqli_begin_transaction($conexion);
 
-    mysqli_stmt_bind_param(
-        $stmt,
-        "ssssssissss",
-        $Usuario,
-        $ClaveHash,
-        $Nombre_Completo,
-        $Telefono,
-        $Direccion,
-        $Email,
-        $Rol,
-        $hoja_vida_path,
-        $Titulo,
-        $Experiencia,
-        $estado_verificacion
-    );
+    try {
+        // Insertar usuario (CONSULTA PREPARADA)
+        $sql_usuario = "INSERT INTO usuarios (Usuario, Clave, Nombre_Completo, Telefono, Direccion, Email, rol_id) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt_usuario = mysqli_prepare($conexion, $sql_usuario);
+        mysqli_stmt_bind_param($stmt_usuario, "ssssssi", $Usuario, $ClaveHash, $Nombre_Completo, $Telefono, $Direccion, $Email, $Rol);
+        mysqli_stmt_execute($stmt_usuario);
+        
+        $usuario_id = mysqli_insert_id($conexion);
 
-    if (mysqli_stmt_execute($stmt)) {
+        // Si es docente, insertar datos adicionales
+        if ($Rol == 3) { // ID de docente
+            $Especialidad = validate($_POST['Especialidad'] ?? '', $conexion);
+            $Titulo = validate($_POST['Titulo'] ?? '', $conexion);
+            $Institucion = validate($_POST['Institucion'] ?? '', $conexion);
+            
+            if (empty($Especialidad) || empty($Titulo)) {
+                throw new Exception("Todos los campos de docente son requeridos");
+            }
+
+            $sql_docente = "INSERT INTO docentes (usuario_id, especialidad, titulo, institucion) 
+                            VALUES (?, ?, ?, ?)";
+            $stmt_docente = mysqli_prepare($conexion, $sql_docente);
+            mysqli_stmt_bind_param($stmt_docente, "isss", $usuario_id, $Especialidad, $Titulo, $Institucion);
+            mysqli_stmt_execute($stmt_docente);
+        }
+
+        // Confirmar transacción
+        mysqli_commit($conexion);
+        
+        // Redirección exitosa
         $_SESSION['registro_exitoso'] = true;
         header("Location: ../login/index.php?registro=exitoso");
         exit();
-    } else {
-        error_log("Error ejecutando consulta: " . mysqli_stmt_error($stmt));
-        $_SESSION['error_registro'] = "Error al guardar los datos";
-        header("Location: ../Registro/RegistroUsuarios.php");
+
+    } catch (Exception $e) {
+        // Revertir transacción en caso de error
+        mysqli_rollback($conexion);
+        header("Location: ../Registro/RegistroUsuarios.php?error=" . urlencode($e->getMessage()));
         exit();
+    } finally {
+        if (isset($stmt)) mysqli_stmt_close($stmt);
+        if (isset($stmt_check)) mysqli_stmt_close($stmt_check);
+        mysqli_close($conexion);
     }
 } else {
     header("Location: ../Registro/RegistroUsuarios.php");

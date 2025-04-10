@@ -1,4 +1,4 @@
-<?php
+ <?php 
 
 $host="localhost";
 $user="root";
@@ -10,4 +10,4 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if (!$conexion) {
     echo "conexion fallida";
-}
+} 
