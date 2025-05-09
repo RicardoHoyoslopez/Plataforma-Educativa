@@ -1,4 +1,6 @@
-<?php require '../docente/controlador_profesor.php'; ?>
+<?php
+require '../docente/controlador_profesor.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -36,9 +38,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li class="dropdown-item text-muted"><i class="bi bi-person-badge-fill"></i> Docente</li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger" href="../login/CerrarSesion.php"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
                             </ul>
                         </li>
@@ -60,7 +60,7 @@
                     <tr>
                         <th>Clase</th>
                         <th>Descripción</th>
-                        <th>Fecha de Creación</th> <!-- Nueva columna -->
+                        <th>Fecha de Creación</th>
                         <th>Día</th>
                         <th>Hora de Inicio</th>
                         <th>Hora de Fin</th>
@@ -73,7 +73,7 @@
                         <tr>
                             <td><?php echo htmlspecialchars($clase['titulo']); ?></td>
                             <td><?php echo nl2br(htmlspecialchars($clase['descripcion'])); ?></td>
-                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($clase['fecha_creacion']))); ?></td> <!-- Fecha -->
+                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($clase['fecha_creacion']))); ?></td>
                             <td><?php echo htmlspecialchars($clase['dia']); ?></td>
                             <td><?php echo htmlspecialchars($clase['hora_inicio']); ?></td>
                             <td><?php echo htmlspecialchars($clase['hora_fin']); ?></td>
@@ -83,12 +83,14 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="editar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-warning" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="eliminar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro que deseas eliminar esta clase?');">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </a>
+                                <div class="d-flex justify-content-center">
+                                    <a href="editar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-warning me-2" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="eliminar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro que deseas eliminar esta clase?');">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -97,7 +99,13 @@
         </div>
     </div>
 
+    <!-- JS de Bootstrap y SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="alertas.js"></script>
+
+    <!-- Mostrar mensaje de éxito si se creó la clase -->
+    
 </body>
 
 </html>

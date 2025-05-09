@@ -44,18 +44,19 @@ if (isset($_GET['id_profesor'])) {
     }
 
     // Obtener nombre del profesor
-    $sql_prof = "SELECT Nombre_Completo FROM usuarios WHERE id = ?";
-    $stmt_prof = mysqli_prepare($conexion, $sql_prof);
-    mysqli_stmt_bind_param($stmt_prof, "i", $id_profesor);
-    mysqli_stmt_execute($stmt_prof);
-    $res_prof = mysqli_stmt_get_result($stmt_prof);
-    $profesor = mysqli_fetch_assoc($res_prof);
+    $sql_prof = "SELECT Nombre_Completo, titulo_profesional FROM usuarios WHERE id = ?";
+$stmt_prof = mysqli_prepare($conexion, $sql_prof);
+mysqli_stmt_bind_param($stmt_prof, "i", $id_profesor);
+mysqli_stmt_execute($stmt_prof);
+$res_prof = mysqli_stmt_get_result($stmt_prof);
+$profesor = mysqli_fetch_assoc($res_prof);
 } else {
     // Mostrar todos los profesores que han publicado clases
-    $sql = "SELECT DISTINCT u.id AS profesor_id, u.Nombre_Completo
-            FROM usuarios u
-            JOIN clases c ON c.profesor_id = u.id
-            WHERE c.estado = 'Activa'";
+    $sql = "SELECT DISTINCT u.id AS profesor_id, u.Nombre_Completo, u.titulo_profesional
+        FROM usuarios u
+        JOIN clases c ON c.profesor_id = u.id
+        WHERE c.estado = 'Activa'";
+
 
     // Preparar y ejecutar la consulta
     $stmt_profesores = mysqli_prepare($conexion, $sql);

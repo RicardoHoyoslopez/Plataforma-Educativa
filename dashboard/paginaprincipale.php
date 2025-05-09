@@ -41,6 +41,8 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                     <li class="nav-item">
                         <a href="clases.php" class="nav-link text-light">Practicas</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link text-light" href="pqrs.php"><i class="bi bi-question-circle-fill"></i> PQRS</a></li>
+                   
                     <li class="nav-item">
                         <a href="../docente/profesores.php" class="nav-link text-light">Profesores</a>
                     </li>

@@ -23,17 +23,45 @@ if (!$clase) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Clase</title>
+    <!-- Agregar enlace a Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
 
-<form method="POST" action="procesar_edicion.php">
-    <input type="hidden" name="id" value="<?php echo $clase['id_clase']; ?>">
-    <label>Título:</label>
-    <input type="text" name="titulo" value="<?php echo htmlspecialchars($clase['titulo']); ?>" required>
-    <br>
-    <label>Descripción:</label>
-    <textarea name="descripcion" required><?php echo htmlspecialchars($clase['descripcion']); ?></textarea>
-    <br>
-    <label>Estado:</label>
-    <textarea name="estado" required><?php echo htmlspecialchars($clase['estado']); ?></textarea>
-    ><br>
-    <button type="submit">Guardar cambios</button>
-</form>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center">Editar Clase</h2>
+        <form method="POST" action="procesar_edicion.php">
+            <input type="hidden" name="id" value="<?php echo $clase['id_clase']; ?>">
+
+            <div class="mb-3">
+                <label class="form-label" for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" class="form-control" value="<?php echo htmlspecialchars($clase['titulo']); ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" required><?php echo htmlspecialchars($clase['descripcion']); ?></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="estado">Estado:</label>
+                <textarea id="estado" name="estado" class="form-control" required><?php echo htmlspecialchars($clase['estado']); ?></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </form>
+    </div>
+</div>
+
+<!-- Agregar enlace a los scripts de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

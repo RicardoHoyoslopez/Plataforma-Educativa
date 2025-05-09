@@ -31,8 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt2 = mysqli_prepare($conexion, $sql_horario);
     mysqli_stmt_bind_param($stmt2, "isss", $id_clase, $dia, $hora_inicio, $hora_fin);
     mysqli_stmt_execute($stmt2);
-
-    header("Location: perfil_profesor.php?mensaje=Clase creada exitosamente");
+    // Suponiendo que ya insertaste la clase exitosamente...
+    header("Location: perfil_profesor.php?creado=1");
     exit();
 }
-?>
