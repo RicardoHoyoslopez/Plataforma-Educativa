@@ -15,9 +15,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-
-
-    <link rel="stylesheet" href="stylee.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -42,7 +40,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                         <a href="clases.php" class="nav-link text-light">Practicas</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../docente/profesores.php" class="nav-link text-light">Profesores</a>
+                        <a href="PaginaProfesor.php" class="nav-link text-light">Profesores</a>
                     </li>
                     <li class="nav-item">
                         <?php if ($usuario_autenticado): ?>
@@ -68,15 +66,15 @@ $usuario_autenticado = isset($_SESSION['usuario']);
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="../assets/img/prefesores.jpg" class="d-block w-100" alt="Clases personalizadas">
+                <img src="../../assets/img/prefesores.jpg" class="d-block w-100" alt="Clases personalizadas">
                 <div class="carousel-caption">
                     <h5>Clases personalizadas</h5>
                     <p>Encuentra el profesor ideal y comienza a aprender hoy mismo.</p>
-                    <a href="../docente/PaginaProfesor.php" class="btn btn-primary mt-3">Encuentra tu profesor</a>
+                    <a href="PaginaProfesor.php" class="btn btn-primary mt-3">Encuentra tu profesor</a>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="../assets/img/formulario.png" class="d-block w-100" alt="Aprende a tu ritmo">
+                <img src="../../assets/img/formulario.png" class="d-block w-100" alt="Aprende a tu ritmo">
                 <div class="carousel-caption">
                     <h5>Aprende a tu ritmo</h5>
                     <p>Clases adaptadas a tus necesidades y horarios.</p>
@@ -84,7 +82,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="../assets/img/puntos.jpg" class="d-block w-100" alt="Sistema de puntos">
+                <img src="../../assets/img/puntos.jpg" class="d-block w-100" alt="Sistema de puntos">
                 <div class="carousel-caption">
                     <h5>Sistema de puntos</h5>
                     <p>Gana puntos por cada clase y canjéalos por descuentos.</p>
@@ -109,7 +107,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 <!-- Clase de Inglés -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="class-card">
-                        <img src="../assets/img/ingles.jpg" alt="Clase de Inglés" class="class-img">
+                        <img src=".../assets/img/ingles.jpg" alt="Clase de Inglés" class="class-img">
                         <h3 class="class-title">Inglés</h3>
                         <p class="class-description">
                             Mejora tu nivel de inglés con clases personalizadas. Aprende gramática, vocabulario y conversación.
@@ -120,7 +118,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 <!-- Clase de Matemáticas -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="class-card">
-                        <img src="../assets/img/matematicas.jpeg" alt="Clase de Matemáticas" class="class-img">
+                        <img src=".../assets/img/matematicas.jpeg" alt="Clase de Matemáticas" class="class-img">
                         <h3 class="class-title">Matemáticas</h3>
                         <p class="class-description">
                             Domina las matemáticas con clases adaptadas a tu nivel. Álgebra, cálculo, geometría y más.
@@ -224,7 +222,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
         <div class="container">
             <p>&copy; 2025 Plataforma Educativa. Todos los derechos reservados.</p>
             <p>
-                <a href="#" class="text-white">Política de Privacidad</a> |
+                <a href="#" class="text-white">Política de Privacidad</a> | 
                 <a href="#" class="text-white">Términos y Condiciones</a>
             </p>
             <div class="social-links">

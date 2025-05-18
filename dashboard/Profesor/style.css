@@ -1,0 +1,134 @@
+/* Estilos titulo */
+.border-box {
+    border: 2px solid rgb(255, 255, 255); /* Borde blanco de 2px */
+    padding: 5px 10px; /* Espaciado interno para que el texto no esté pegado al borde */
+    border-radius: 5px; /* Bordes redondeados */
+    display: inline-block; /* Asegura que el borde rodee el texto */
+}
+    
+    /* Estilos para el carrusel */
+    #carouselE {
+        max-height: 500px; /* Limita la altura del carrusel */
+        overflow: hidden; /* Evita que el contenido se desborde */
+        position: relative; /* Asegura que los elementos internos se posicionen correctamente */
+    }
+
+    /* Estilos para las imágenes del carrusel */
+    #carouselE .carousel-item img {
+        width: 100%; /* Asegura que la imagen ocupe el ancho completo */
+        height: 500px; /* Fija la altura de las imágenes */
+        object-fit: cover; /* Ajusta la imagen para cubrir el espacio sin distorsionarla */
+    }
+
+    /* Estilos para el texto del carrusel */
+    #carouselE .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente oscuro */
+        padding: 20px; /* Espaciado interno */
+        border-radius: 10px; /* Bordes redondeados */
+        bottom: 20%; /* Posición vertical del texto */
+        left: 50%; /* Centrado horizontal */
+        transform: translateX(-50%); /* Ajuste para centrar */
+        width: 80%; /* Ancho del texto */
+        max-width: 600px; /* Ancho máximo */
+        text-align: center; /* Centrar el texto */
+    }
+
+    /* Estilos para los botones dentro del carrusel */
+    #carouselE .carousel-caption .btn {
+        background-color: #007bff; /* Color de fondo del botón */
+        border: none; /* Sin borde */
+        color: #fff; /* Color del texto */
+        font-weight: bold; /* Texto en negrita */
+        padding: 10px 20px; /* Espaciado interno */
+        border-radius: 5px; /* Bordes redondeados */
+        transition: background-color 0.3s ease; /* Transición suave */
+    }
+
+    /* Efecto hover para los botones */
+    #carouselE .carousel-caption .btn:hover {
+        background-color: #0056b3; /* Color de fondo al pasar el mouse */
+    }
+
+
+
+
+
+/* ---------------------- */
+.classes {
+    padding: 60px 0;
+    background-color: #f8f9fa; /* Fondo claro */
+}
+
+.class-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.class-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.class-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.class-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.class-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.class-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Color primario */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.class-btn:hover {
+    background-color: #0056b3; /* Color primario oscuro */
+}
+
+/* Estilos para la pagina de clases ----------------------------------------------------------------------------  */
+
+/* Estilos para las tarjetas de clases */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Espaciado para la sección de clases */
+.clases {
+    padding: 60px 0;
+}
+
+
+/* Configuración principal para el footer fijo */
