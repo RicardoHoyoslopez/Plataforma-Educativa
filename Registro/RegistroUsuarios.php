@@ -1,5 +1,6 @@
 <?php
 require '../includes/Conexion.php';
+$conexion = conectarBD();
 $query_roles = "SELECT * FROM roles";
 $result_roles = mysqli_query($conexion, $query_roles);
 
