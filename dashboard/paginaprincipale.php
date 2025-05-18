@@ -21,42 +21,10 @@ $usuario_autenticado = isset($_SESSION['usuario']);
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container">
+<!--Navbar--> 
+<?php include '../includes/navbar.php'; ?> <!-- O ajusta la ruta según tu estructura -->
 
-            <a href="#" class="navbar-brand">
-                <span class="text-light border-box">Educardo</span>
-            </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS"
-                aria-controls="navbarS" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarS">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="clases.php" class="nav-link text-light">Practicas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../docente/profesores.php" class="nav-link text-light">Profesores</a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if ($usuario_autenticado): ?>
-                            <!-- Botón de Cerrar Sesión-------------------------------------------------------- -->
-                            <a href="../login/CerrarSesion.php" class="btn btn-light">Cerrar Sesión</a>
-                        <?php else: ?>
-                            <!-- Botón de Iniciar Sesión------------------------------------------------------ -->
-                            <a href="../login/IniciarSesion.php" class="btn btn-light">Iniciar Sesión</a>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Carousel -->
     <div id="carouselE" class="carousel slide" data-bs-ride="carousel">
@@ -72,7 +40,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 <div class="carousel-caption">
                     <h5>Clases personalizadas</h5>
                     <p>Encuentra el profesor ideal y comienza a aprender hoy mismo.</p>
-                    <a href="PaginaProfesor.php" class="btn btn-primary mt-3">Encuentra tu profesor</a>
+                    <a href="../docente/PaginaProfesor.php" class="btn btn-primary mt-3">Encuentra tu profesor</a>
                 </div>
             </div>
             <div class="carousel-item">

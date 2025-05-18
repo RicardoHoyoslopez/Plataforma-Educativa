@@ -1,6 +1,7 @@
 <?php
 session_start(); // Inicia la sesión 
 require '../includes/Conexion.php'; // Conecion base de datos
+$conexion = conectarBD();
 
 // Consulta para obtener los profesores
 $sql = "SELECT * FROM usuarios WHERE rol_id = 3"; // el rol_id de los profesores es 3
@@ -25,55 +26,25 @@ if (!$result) {
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container">
-            <a href="#" class="navbar-brand">
-                <span class="text-light border-box">Educardo</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS"
-                aria-controls="navbarS" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarS">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="paginaprincipale.php" class="nav-link text-light">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="clases.php" class="nav-link text-light">Prácticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="PaginaProfesor.php" class="nav-link text-light">Profesores</a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['usuario'])): ?>
-                            <a href="../login/cerrar_sesion.php" class="btn btn-light">Cerrar Sesión</a>
-                        <?php else: ?>
-                            <a href="../login/IniciarSesion.php" class="btn btn-light">Iniciar Sesión</a>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- aqui comienza el navbar -------------------------------------------------------------------------------------------------->
+        <?php include '../includes/navbar.php'; ?> <!-- ruta del navbar -->
 
     <!-- Contenido mostrado en informacion de docente traido desde la base de datos---------------------------------  -->
     <section class="profesores-section section-padding">
         <div class="container">
-            <h2 class="text-center mb-5">Perfiles de Profesores</h2>
+            <h2 class="text-center mb-4">Perfiles de Profesores</h2>
             <div class="row">
                 <?php while ($profesor = mysqli_fetch_assoc($result)): ?>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-3 mb-3">
                         <div class="card h-100">
-                            <img src="../assets/img/profesor.jpg" class="card-img-top" alt="Foto de perfil">
+                            <img src="../assets/img/perfil.jpg" class="card-img-top" alt="Foto de perfil">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($profesor['Nombre_Completo']) ?></h5>
                                 <p class="card-text">
-                                    <strong>Usuario:</strong> <?= htmlspecialchars($profesor['Usuario']) ?><br>
+                                    <strong>Profesion:</strong> <?= htmlspecialchars($profesor['titulo_profesional']) ?><br>
                                     <strong>Email:</strong> <?= htmlspecialchars($profesor['Email']) ?><br>
                                     <strong>Teléfono:</strong> <?= htmlspecialchars($profesor['Telefono']) ?><br>
-                                    <strong>Dirección:</strong> <?= htmlspecialchars($profesor['Direccion']) ?>
+                                    <strong>Experiencia:</strong> <?= htmlspecialchars($profesor['experiencia_laboral']) ?>
                                 </p>
                                 <a href="perfil_profesor.php?id=<?= $profesor['id'] ?>" class="btn btn-primary">Ver perfil completo</a>
                             </div>

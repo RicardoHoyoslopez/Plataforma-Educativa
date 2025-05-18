@@ -13,22 +13,22 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="PaginaProfesor.php">
+            <a class="navbar-brand" href="perfil_profesor.php">
                 <i class="bi bi-mortarboard-fill"></i> Educardo
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDocente">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarDocente">
-                <form class="d-flex me-auto" role="search" action="buscar_clases.php" method="GET">
+                <form class="d-flex me-auto" role="search" action="#" method="GET">
                     <input class="form-control me-2" type="search" name="q" placeholder="Buscar clases..." aria-label="Buscar">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link text-light" href="PaginaProfesor.php"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="pqrs.php"><i class="bi bi-question-circle-fill"></i> PQRS</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="perfil_profesor.php"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="../PQR/formulario_pqr.php"><i class="bi bi-question-circle-fill"></i> PQRS</a></li>
                     <?php if (isset($_SESSION['usuario_id'])): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
@@ -56,43 +56,43 @@
 
         <div class="table-responsive">
             <table class="table table-bordered bg-white shadow">
-                <thead class="table-primary text-center">
-                    <tr>
-                        <th>Clase</th>
-                        <th>Descripción</th>
-                        <th>Fecha de Creación</th> <!-- Nueva columna -->
-                        <th>Día</th>
-                        <th>Hora de Inicio</th>
-                        <th>Hora de Fin</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($clase = mysqli_fetch_assoc($resultado)): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($clase['titulo']); ?></td>
-                            <td><?php echo nl2br(htmlspecialchars($clase['descripcion'])); ?></td>
-                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($clase['fecha_creacion']))); ?></td> <!-- Fecha -->
-                            <td><?php echo htmlspecialchars($clase['dia']); ?></td>
-                            <td><?php echo htmlspecialchars($clase['hora_inicio']); ?></td>
-                            <td><?php echo htmlspecialchars($clase['hora_fin']); ?></td>
-                            <td>
-                                <span class="badge bg-<?php echo strtolower($clase['estado']) === 'activo' ? 'success' : 'secondary'; ?>">
-                                    <?php echo htmlspecialchars($clase['estado']); ?>
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <a href="editar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-warning" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="eliminar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro que deseas eliminar esta clase?');">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
+            <thead class="table-primary text-center">
+    <tr>
+        <th>Clase</th>
+        <th>Descripción</th>
+        <th>Fecha de Creación</th>
+        <th>Día</th>
+        <th>Precio</th> <!-- Reemplaza las columnas de hora -->
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+</thead>
+<tbody>
+    <?php while ($clase = mysqli_fetch_assoc($resultado)): ?>
+        <tr>
+            <td><?php echo htmlspecialchars($clase['titulo']); ?></td>
+            <td><?php echo nl2br(htmlspecialchars($clase['descripcion'])); ?></td>
+            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($clase['fecha_creacion']))); ?></td>
+            <td><?php echo htmlspecialchars($clase['dia']); ?></td>
+            <td>$<?php echo number_format($clase['precio'], 3, ',', '.'); ?> COP</td>
+
+            <td>
+                <span class="badge bg-<?php echo strtolower($clase['estado']) === 'activo' ? 'success' : 'secondary'; ?>">
+                    <?php echo htmlspecialchars($clase['estado']); ?>
+                </span>
+            </td>
+            <td class="text-center">
+                <a href="editar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-warning" title="Editar">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="eliminar_clase.php?id=<?php echo $clase['id_clase']; ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro que deseas eliminar esta clase?');">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
+            </td>
+        </tr>
+    <?php endwhile; ?>
+</tbody>
+
             </table>
         </div>
     </div>
