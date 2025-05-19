@@ -16,19 +16,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("isssss", $id_usuario, $tipo, $asunto, $descripcion, $fecha_creacion, $estado);
 
     if ($stmt->execute()) {
-    echo "<script>alert('PQR enviada correctamente');</script>";
-    // direccionamiento segun el rol
-    if ($_SESSION['rol_id'] == 2) {
-        echo "<script>window.location.href = '../dashboard/paginaprincipale.php';</script>";
-    } elseif ($_SESSION['rol_id'] == 3) {
-        echo "<script>window.location.href = '../docente/perfil_profesor.php';</script>";
-    } else {
-        echo "<script>window.location.href = '../index.php';</script>"; 
+        // Redirigir según el rol con un parámetro en la URL
+        if ($_SESSION['rol_id'] == 2) {
+            header("Location: ../dashboard/paginaprincipale.php?pqrs=enviado");
+        } elseif ($_SESSION['rol_id'] == 3) {
+            header("Location: ../docente/perfil_profesor.php?pqrs=enviado");
+        } else {
+            header("Location: ../index.php?pqrs=enviado");
+        }
+        exit();
     }
-}
-
 
     $stmt->close();
     $conexion->close();
 }
-?>

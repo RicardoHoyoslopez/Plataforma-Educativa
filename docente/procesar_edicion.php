@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../includes/Conexion.php';
+$conexion=conectarBD();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);

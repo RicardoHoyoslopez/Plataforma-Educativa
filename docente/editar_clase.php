@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../includes/Conexion.php';
+$conexion=conectarBD();
 
 if (!isset($_GET['id'])) {
     header("Location: perfil_profesor.php?error=ID inválido");

@@ -2,6 +2,8 @@
 session_start();
 require '../includes/Conexion.php';
 
+$conexion=conectarBD();
+
 // Seguridad para estudiantes
 if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 2) {
     header("Location: ../login/Index.php?error=Acceso denegado");

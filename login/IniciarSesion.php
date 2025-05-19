@@ -30,13 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verificar contraseña
         if (password_verify($Clave, $row['Clave'])) {
             // Crear la sesión
-            $_SESSION = [
-                'usuario_id' => $row['id'],
-                'usuario' => $row['Usuario'],
-                'nombre_completo' => $row['Nombre_Completo'],
-                'rol_id' => $row['rol_id'],
-                'rol' => $row['rol_nombre']
-            ];
+            $_SESSION['usuario_id'] = $row['id'];
+            $_SESSION['usuario'] = $row['Usuario'];
+            $_SESSION['nombre_completo'] = $row['Nombre_Completo'];
+            $_SESSION['rol_id'] = $row['rol_id'];
+            $_SESSION['rol'] = $row['rol_nombre'];
+
 
             // Redirección por rol
             switch ($row['rol_id']) {

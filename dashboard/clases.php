@@ -48,7 +48,8 @@ if (!$resultado) {
                                     <strong>Profesor:</strong> <?= htmlspecialchars($clases['profesor']) ?><br>
                                     <strong>Valor:</strong> $<?= number_format($clases['precio'], 3, ',', '.') ?>
                                 </p>
-                                <a href="registro_clase.php?id=<?= $clase['id_clase'] ?>" class="btn btn-success">Registrarse</a>
+                                <a href="../inscripcion/inscripcion_formulario.php?id=<?= $clases['id_clase'] ?>" class="btn btn-success">Registrarse</a>
+
                             </div>
                         </div>
                     </div>
