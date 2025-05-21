@@ -99,7 +99,7 @@ if (isset($_SESSION['error_registro'])) {
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
-                                <input type="text" name="Experiencia" class="form-control" placeholder="Especialidad (ej: Matemáticas)" required>
+                                <input type="text" name="Experiencia" class="form-control" placeholder="Experiencia (ej: Matemáticas)" required>
                             </div>
 
                             <div class="input-group mb-3">

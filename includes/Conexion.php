@@ -12,6 +12,7 @@ function conectarBD() {
     if (!$conexion) {
         die("Conexión fallida: " . mysqli_connect_error());
     }
+    mysqli_query($conexion, "SET time_zone = '-05:00'");
 
     return $conexion;
 }

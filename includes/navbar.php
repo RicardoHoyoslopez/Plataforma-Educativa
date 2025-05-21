@@ -23,6 +23,15 @@
                 </li>
 
                 <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item">
+                        <a href="../inscripcion/clases_solicitadas.php" class="nav-link text-light">Clases solicitadas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../PQR/mis_pqrs.php" class="nav-link text-light">Mis PQR</a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['usuario_id'])): ?>
                     <!-- Menú desplegable con nombre del usuario -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">

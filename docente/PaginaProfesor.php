@@ -46,7 +46,7 @@ if (!$result) {
                                     <strong>Teléfono:</strong> <?= htmlspecialchars($profesor['Telefono']) ?><br>
                                     <strong>Experiencia:</strong> <?= htmlspecialchars($profesor['experiencia_laboral']) ?>
                                 </p>
-                                <a href="perfil_profesor.php?id=<?= $profesor['id'] ?>" class="btn btn-primary">Ver perfil completo</a>
+                                <a href="#" class="btn btn-primary">Ver perfil completo</a>
                             </div>
                         </div>
                     </div>

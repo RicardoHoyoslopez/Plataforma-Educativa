@@ -2,20 +2,36 @@
 session_start();
 require '../includes/Conexion.php';
 
-if (!isset($_GET['id'])) {
-    header("Location: perfil_profesor.php?error=ID inválido");
-    exit();
+$conexion = conectarBD();
+
+/**
+ * Verifica que exista el parámetro 'id' en la URL.
+ */
+function verificarId() {
+    if (!isset($_GET['id'])) {
+        header("Location: perfil_profesor.php?error=ID inválido");
+        exit();
+    }
+    return intval($_GET['id']);
 }
 
-$id = intval($_GET['id']);
+/**
+ * Obtiene la información de la clase si pertenece al docente.
+ */
+function obtenerClase($conexion, $id_clase, $docente_id) {
+    $sql = "SELECT * FROM clases WHERE id_clase = ? AND profesor_id = ?";
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $id_clase, $docente_id);
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($resultado);
+}
+
+// --- Ejecución principal ---
+$id = verificarId();
 $docente_id = $_SESSION['usuario_id'];
 
-$sql = "SELECT * FROM clases WHERE id_clase = ? AND profesor_id = ?";
-$stmt = mysqli_prepare($conexion, $sql);
-mysqli_stmt_bind_param($stmt, "ii", $id, $docente_id);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-$clase = mysqli_fetch_assoc($resultado);
+$clase = obtenerClase($conexion, $id, $docente_id);
 
 if (!$clase) {
     header("Location: perfil_profesor.php?error=Clase no encontrada");
@@ -23,24 +39,31 @@ if (!$clase) {
 }
 ?>
 
-<form method="POST" action="procesar_edicion.php">
+<!-- Formulario para editar la clase con Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<form method="POST" action="procesar_edicion.php" class="container mt-4" style="max-width: 600px;">
     <input type="hidden" name="id" value="<?php echo $clase['id_clase']; ?>">
 
-    <label>Título:</label>
-    <input type="text" name="titulo" value="<?php echo htmlspecialchars($clase['titulo']); ?>" required>
-    <br>
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Título:</label>
+        <input type="text" id="titulo" name="titulo" class="form-control" value="<?php echo htmlspecialchars($clase['titulo']); ?>" required>
+    </div>
 
-    <label>Descripción:</label>
-    <textarea name="descripcion" required><?php echo htmlspecialchars($clase['descripcion']); ?></textarea>
-    <br>
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" required><?php echo htmlspecialchars($clase['descripcion']); ?></textarea>
+    </div>
 
-    <label>Estado:</label>
-    <input type="text" name="estado" value="<?php echo htmlspecialchars($clase['estado']); ?>" required>
-    <br>
+    <div class="mb-3">
+        <label for="estado" class="form-label">Estado:</label>
+        <input type="text" id="estado" name="estado" class="form-control" value="<?php echo htmlspecialchars($clase['estado']); ?>" required>
+    </div>
 
-    <label>Precio:</label>
-    <input type="number" name="precio" step="0.01" value="<?php echo htmlspecialchars($clase['precio']); ?>" required>
-    <br>
+    <div class="mb-3">
+        <label for="precio" class="form-label">Precio:</label>
+        <input type="number" id="precio" name="precio" step="0.01" class="form-control" value="<?php echo htmlspecialchars($clase['precio']); ?>" required>
+    </div>
 
-    <button type="submit">Guardar cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
 </form>
