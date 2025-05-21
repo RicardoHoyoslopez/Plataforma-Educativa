@@ -32,7 +32,7 @@ function registrarUsuario($data, $files, $conexion) {
 
     // Preparar y ejecutar insert
     $stmt = $conexion->prepare("INSERT INTO usuarios (Usuario, Clave, Nombre_Completo, Telefono, Direccion, Email, rol_id, experiencia_laboral, titulo_profesional, hoja_vida_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssiss", $usuario, $clave, $nombre, $telefono, $direccion, $email, $rol_id, $experiencia, $titulo, $hoja_vida_path);
+    $stmt->bind_param("ssssssisss", $usuario, $clave, $nombre, $telefono, $direccion, $email, $rol_id, $experiencia, $titulo, $hoja_vida_path);
     $stmt->execute();
     return $stmt->affected_rows > 0;
 }

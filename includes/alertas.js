@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (params.get("pqrs") === "enviado") {
         Swal.fire({
             icon: "success",
-            title: "¡PQRS enviada!",
+            title: "¡PQR enviada!",
             text: "Tu solicitud fue enviada con éxito.",
             confirmButtonText: "Aceptar",
             timer: 3000,
@@ -63,4 +63,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+ document.addEventListener('DOMContentLoaded', function () {
+    console.log("alertas.js activo");
+
+    const params = new URLSearchParams(window.location.search);
+    const mensaje = params.get('mensaje');
+    const error = params.get('error');
+
+    console.log("mensaje:", mensaje);
+    console.log("error:", error);
+
+    if (mensaje === 'clase_aceptada') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Clase aceptada',
+            text: 'Se aceptó la solicitud de clase correctamente.',
+            confirmButtonColor: '#3085d6',
+            timer: 3000,
+            timerProgressBar: true
+        });
+    } else if (mensaje === 'clase_rechazada') {
+        Swal.fire({
+            icon: 'info',
+            title: 'Clase rechazada',
+            text: 'Has rechazado esta inscripción.',
+            confirmButtonColor: '#3085d6',
+            timer: 3000,
+            timerProgressBar: true
+        });
+    } else if (error === 'no_actualizado') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo actualizar el estado de la inscripción.',
+            confirmButtonColor: '#d33'
+        });
+    }
+   
+
+
+
+});
+
 

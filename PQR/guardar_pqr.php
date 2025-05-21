@@ -8,15 +8,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = $_POST['tipo'];
     $asunto = $_POST['asunto'];
     $descripcion = $_POST['descripcion'];
-    $fecha_creacion = date('Y-m-d H:i:s');
+    $fecha_creacion = $_POST['fecha_creacion'] . ' 00:00:00'; // ← Usamos la fecha del usuario
     $estado = 'Abierto';
+     if (!isset($_POST['fecha_creacion']) || empty($_POST['fecha_creacion'])) {
+        die("Error: La fecha de creación no fue enviada.");
+    }
 
     $stmt = $conexion->prepare("INSERT INTO pqrs (id_usuario, tipo, asunto, descripcion, fecha_creacion, estado) 
                                 VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isssss", $id_usuario, $tipo, $asunto, $descripcion, $fecha_creacion, $estado);
 
     if ($stmt->execute()) {
-        // Redirigir según el rol con un parámetro en la URL
         if ($_SESSION['rol_id'] == 2) {
             header("Location: ../dashboard/paginaprincipale.php?pqrs=enviado");
         } elseif ($_SESSION['rol_id'] == 3) {

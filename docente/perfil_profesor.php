@@ -31,6 +31,8 @@ require 'controlador_profesor.php';
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link text-light" href="perfil_profesor.php"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="../PQR/formulario_pqr.php"><i class="bi bi-question-circle-fill"></i> PQRS</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="../PQR/mis_pqrs.php"><i class="bi bi-question-circle-fill"></i>Mis PQRS</a></li>
+
                     <?php if (isset($datosSesion['usuario_id'])): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown">
@@ -88,13 +90,15 @@ require 'controlador_profesor.php';
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="editar_clase.php?id=<?= $clase['id_clase'] ?>" class="btn btn-sm btn-warning">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="eliminar_clase.php?id=<?= $clase['id_clase'] ?>" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('¿Eliminar esta clase?');">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </a>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="editar_clase.php?id=<?= $clase['id_clase'] ?>" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="eliminar_clase.php?id=<?= $clase['id_clase'] ?>" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('¿Eliminar esta clase?');">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -124,9 +128,9 @@ require 'controlador_profesor.php';
                                 <td><?= htmlspecialchars($sol['clase']) ?></td>
                                 <td><?= htmlspecialchars($sol['fecha_solicitud']) ?></td>
                                 <td class="text-center">
-                                    <a href="responder_inscripcion.php?id=<?= $sol['id_inscripcion'] ?>&accion=aceptar"
+                                    <a href="../inscripcion/responder_inscripcion.php?id=<?= $sol['id_inscripcion'] ?>&accion=aceptar"
                                         class="btn btn-sm btn-success">Aceptar</a>
-                                    <a href="responder_inscripcion.php?id=<?= $sol['id_inscripcion'] ?>&accion=rechazar"
+                                    <a href="../inscripcion/responder_inscripcion.php?id=<?= $sol['id_inscripcion'] ?>&accion=rechazar"
                                         class="btn btn-sm btn-danger">Rechazar</a>
                                 </td>
                             </tr>

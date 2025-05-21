@@ -22,11 +22,14 @@
                     <a href="../docente/PaginaProfesor.php" class="nav-link text-light">Profesores</a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="../inscripcion/clases_solicitadas.php" class="nav-link text-light">Clases solicitadas</a>
-                </li>
-
-
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <li class="nav-item">
+                        <a href="../inscripcion/clases_solicitadas.php" class="nav-link text-light">Clases solicitadas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../PQR/mis_pqrs.php" class="nav-link text-light">Mis PQR</a>
+                    </li>
+                <?php endif; ?>
 
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <!-- Menú desplegable con nombre del usuario -->
@@ -41,9 +44,7 @@
                                     <i class="bi bi-envelope-check"></i> Realizar PQR
                                 </a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <!-- Cerrar sesión -->
                             <li>
                                 <a class="dropdown-item text-danger" href="../login/CerrarSesion.php">

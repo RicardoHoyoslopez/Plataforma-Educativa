@@ -3,7 +3,7 @@ session_start();
 require '../includes/Conexion.php';
 require '../inscripcion/obtener_clases.php';
 
-$conexion = conectarBD(); 
+$conexion = conectarBD();
 
 // Verifica si el usuario está autenticado y es cliente
 if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'Cliente') {
@@ -17,11 +17,13 @@ $resultado = obtenerClasesSolicitadas($conexion, $id_usuario);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Clases solicitadas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <div class="container py-5">
         <div class="card shadow-sm border-0">
@@ -50,13 +52,13 @@ $resultado = obtenerClasesSolicitadas($conexion, $id_usuario);
                                         <td><?php echo date('d/m/Y', strtotime($fila['fecha_inscripcion'])); ?></td>
                                         <td>
                                             <?php
-                                                if ($fila['estado'] === 'Activa') {
-                                                    echo '<span class="badge bg-warning text-dark">⏳ Pendiente</span>';
-                                                } elseif ($fila['estado'] === 'Aprobada') {
-                                                    echo '<span class="badge bg-success">✅ Aprobada</span>';
-                                                } else {
-                                                    echo '<span class="badge bg-secondary">' . htmlspecialchars($fila['estado']) . '</span>';
-                                                }
+                                            if ($fila['estado'] === 'Pendiente') {
+                                                echo '<span class="badge bg-warning text-dark">⏳ Pendiente</span>';
+                                            } elseif ($fila['estado'] === 'Aprobada') {
+                                                echo '<span class="badge bg-success">✅ Aprobada</span>';
+                                            } else {
+                                                echo '<span class="badge bg-secondary">' . htmlspecialchars($fila['estado']) . '</span>';
+                                            }
                                             ?>
                                         </td>
                                     </tr>
@@ -74,4 +76,5 @@ $resultado = obtenerClasesSolicitadas($conexion, $id_usuario);
         </div>
     </div>
 </body>
+
 </html>
