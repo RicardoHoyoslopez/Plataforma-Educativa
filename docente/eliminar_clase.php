@@ -11,6 +11,7 @@ function eliminarHorarios($conexion, $id_clase) {
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id_clase);
     mysqli_stmt_execute($stmt);
+    
 }
 
 /**

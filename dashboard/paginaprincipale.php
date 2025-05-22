@@ -39,7 +39,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 <img src="../assets/img/prefesores.jpg" class="d-block w-100" alt="Clases personalizadas">
                 <div class="carousel-caption">
                     <h5>Clases personalizadas</h5>
-                    <p>Encuentra el profesor ideal y comienza a aprender hoy mismo.</p>
+                    <p>¡Encuentra el profesor ideal y comienza a aprender hoy mismo!</p>
                     <a href="../docente/PaginaProfesor.php" class="btn btn-primary mt-3">Encuentra tu profesor</a>
                 </div>
             </div>
@@ -48,15 +48,20 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                 <div class="carousel-caption">
                     <h5>Aprende a tu ritmo</h5>
                     <p>Clases adaptadas a tus necesidades y horarios.</p>
-                    <a href="../Registro/RegistroUsuarios.php" class="btn btn-primary mt-3">Regístrate ahora</a>
+                    <?php if (!isset($_SESSION['usuario_id'])): ?>
+                        <a href="../Registro/RegistroUsuarios.php" class="btn btn-primary mt-3">¡Regístrate ahora!</a>
+                    <?php else: ?>
+                        <a href="../nosotros/acerca.php" class="btn btn-light mt-3">¡Acerca de nosotros!</a>
+                    <?php endif; ?>
+
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="../assets/img/puntos.jpg" class="d-block w-100" alt="Sistema de puntos">
                 <div class="carousel-caption">
                     <h5>Sistema de puntos</h5>
-                    <p>Gana puntos por cada clase y canjéalos por descuentos.</p>
-                    <a href="#" class="btn btn-primary mt-3">Más información</a>
+                    <p>¡Encuentra tu metodo de pago favorito!</p>
+                    <a href="#" class="btn btn-primary mt-3">Metodos de pago</a>
                 </div>
             </div>
         </div>
@@ -82,7 +87,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                         <p class="class-description">
                             Mejora tu nivel de inglés con clases personalizadas. Aprende gramática, vocabulario y conversación.
                         </p>
-                        <a href="#" class="class-btn">Más información</a>
+                       
                     </div>
                 </div>
                 <!-- Clase de Matemáticas -->
@@ -93,7 +98,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                         <p class="class-description">
                             Domina las matemáticas con clases adaptadas a tu nivel. Álgebra, cálculo, geometría y más.
                         </p>
-                        <a href="#" class="class-btn">Más información</a>
+                        
                     </div>
                 </div>
                 <!-- Clase de Programación -->
@@ -104,7 +109,7 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                         <p class="class-description">
                             Aprende a programar desde cero. Python, JavaScript, desarrollo web y más.
                         </p>
-                        <a href="#" class="class-btn">Más información</a>
+                       
                     </div>
                 </div>
             </div>
@@ -151,11 +156,11 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                     <div class="card text-white text-center bg-dark pb-2">
                         <div class="card-body">
                             <i class="bi bi-person-plus"></i>
-                            <h3 class="card-title">Regístrate</h3>
+                            <h3 class="card-title">Dejanos un comentario</h3>
                             <p class="lead">
-                                Regístrate y comienza a aprender con los mejores profesores.
+                                ¡Comenta lo positivo para que crescamos tu y yo!
                             </p>
-                            <button class="btn bg-primary text-white">Más información</button>
+                            <button class="btn bg-primary text-white">Agrega comentario</button>
                         </div>
                     </div>
                 </div>
@@ -163,11 +168,11 @@ $usuario_autenticado = isset($_SESSION['usuario']);
                     <div class="card text-white text-center bg-dark pb-2">
                         <div class="card-body">
                             <i class="bi bi-book"></i>
-                            <h3 class="card-title">Clases Personalizadas</h3>
+                            <h3 class="card-title">Encuentra los profesores mas destacados</h3>
                             <p class="lead">
-                                Clases adaptadas a tus necesidades y horarios.
+                                ¡Aqui encontraras los mejores profesores por sus calificaciones!.
                             </p>
-                            <button class="btn bg-primary text-white">Más información</button>
+                            <button class="btn bg-primary text-white">Encontrar profesor</button>
                         </div>
                     </div>
                 </div>

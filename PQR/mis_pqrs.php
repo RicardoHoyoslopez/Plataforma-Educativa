@@ -1,12 +1,12 @@
 <?php
 session_start();
 // Establecer la zona horaria correcta (ej: Bogotá)
-date_default_timezone_set('America/Bogota');  // Ajusta según tu ubicación
+date_default_timezone_set('America/Bogota'); 
 require '../includes/conexion.php';
 $conexion = conectarBD();
 
 
-$id_docente = $_SESSION['usuario_id']; // Asegúrate de que este valor esté en sesión
+$id_docente = $_SESSION['usuario_id']; 
 
 $sql = "SELECT id_pqrs, asunto, descripcion, 
                DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion,  -- Solo día/mes/año
