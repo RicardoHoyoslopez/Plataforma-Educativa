@@ -12,9 +12,7 @@
 
         <div class="collapse navbar-collapse" id="navbarS">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a href="../dashboard/paginaprincipale.php" class="nav-link text-light">Inicio</a>
-                </li>
+               
                 <li class="nav-item">
                     <a href="../dashboard/clases.php" class="nav-link text-light">Clases</a>
                 </li>
@@ -29,6 +27,8 @@
                     <li class="nav-item">
                         <a href="../PQR/mis_pqrs.php" class="nav-link text-light">Mis PQR</a>
                     </li>
+
+
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['usuario_id'])): ?>
@@ -44,7 +44,9 @@
                                     <i class="bi bi-envelope-check"></i> Realizar PQR
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <!-- Cerrar sesión -->
                             <li>
                                 <a class="dropdown-item text-danger" href="../login/CerrarSesion.php">

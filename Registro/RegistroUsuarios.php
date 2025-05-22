@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../includes/Conexion.php';
 $conexion = conectarBD();
 $query_roles = "SELECT * FROM roles";

@@ -29,9 +29,10 @@ require 'controlador_profesor.php';
                     <button class="btn btn-outline-light"><i class="bi bi-search"></i></button>
                 </form>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link text-light" href="perfil_profesor.php"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="#"><i class="bi bi-house-door-fill"></i> Inicio</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="../PQR/formulario_pqr.php"><i class="bi bi-question-circle-fill"></i> PQRS</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="../PQR/mis_pqrs.php"><i class="bi bi-question-circle-fill"></i>Mis PQRS</a></li>
+                    
 
                     <?php if (isset($datosSesion['usuario_id'])): ?>
                         <li class="nav-item dropdown">
